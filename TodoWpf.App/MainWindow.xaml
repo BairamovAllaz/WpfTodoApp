@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TodoWpf.App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900"
+        Title="MainWindow" Height="600" Width="900" Background="AliceBlue"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <ResourceDictionary Source="style/Styling.xaml"/>        
     </Window.Resources>
     <Grid>
-        <Grid ShowGridLines="True">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.5*"/>                
                 <ColumnDefinition Width="*"/>                
@@ -21,7 +21,18 @@
                 <!--TODO: Add style to listBoxItem-->
                 <ListBox x:Name="ListTodos" 
                          ItemsSource="{Binding TodoCollection}"
-                         SelectedItem="{Binding SelectedItem}"/> 
+                         SelectedItem="{Binding SelectedItem}"
+                         HorizontalContentAlignment="Center">
+                    <ListBox.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="ListBoxItem.Foreground" Value="Lime"/>
+                            <Setter Property="ListBoxItem.Margin" Value="5"/>
+                            <Setter Property="ListBoxItem.Padding" Value="5"/>
+                            <Setter Property="ListBoxItem.FontSize" Value="23"/>
+                            <Setter Property="ListBoxItem.Background" Value="Gray"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>    
+                </ListBox>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBox x:Name="TodoBox" Style="{StaticResource Style_TextBlock}"/>
@@ -36,10 +47,11 @@
                             Style="{StaticResource Style_UpdateButton}"
                             Click="ButtonUpdate_OnClick"/>
                     <Button Content="Read"
-                            Style="{StaticResource Style_ReadButton}"/>
+                            Style="{StaticResource Style_ReadButton}"
+                            Click="ButtonRead_OnClick"/>
                 </StackPanel>
                 <TextBlock x:Name="Selected"
-                           Text="{Binding SelectedItem}"></TextBlock>
+                           Style="{StaticResource Style_Selected}"/>
             </StackPanel>
         </Grid>
     </Grid>

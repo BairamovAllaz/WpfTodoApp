@@ -1,21 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 namespace TodoWpf.App
 {
     /// <summary>
@@ -25,7 +11,6 @@ namespace TodoWpf.App
     {
         public ObservableCollection<string> TodoCollection { get; set; }
         private string _selecteditem;
-
         public string SelectedItem
         {
             get => _selecteditem;
@@ -56,18 +41,29 @@ namespace TodoWpf.App
         
         private void ButtonUpdate_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(SelectedItem)) MessageBox.Show("Select an item to update");
+            if (string.IsNullOrWhiteSpace(SelectedItem))
+            {
+                MessageBox.Show("Select an item to update");
+                return;
+            }
+            if (TodoBox.Text == "")
+            {
+                MessageBox.Show("Write something to update");
+                return;
+            }
             int index = TodoCollection.IndexOf(SelectedItem);
             TodoCollection[index] = TodoBox.Text;
+            TodoBox.Text = "";
         }
-        
+        private void ButtonRead_OnClick(object sender, RoutedEventArgs e)
+        {
+            Selected.Text = SelectedItem;
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-       
     }
 }

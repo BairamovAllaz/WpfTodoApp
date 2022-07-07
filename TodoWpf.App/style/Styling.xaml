@@ -33,26 +33,35 @@
         </Style.Triggers>
     </Style>
     <Style x:Key="Style_DeleteButton" TargetType="Button" BasedOn="{StaticResource Style_ButtonsDefault}">
-        <Setter Property="Background" Value="Red"/>
+        <Style.Setters>
+            <Setter Property="Background" Value="Red"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ListTodos,Path=HasItems}" Value="False">
+                <Setter Property="IsEnabled" Value="False"/>     
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="Style_ReadButton" TargetType="Button" BasedOn="{StaticResource Style_ButtonsDefault}">
-        <Setter Property="Background" Value="Violet"/>
+        <Style.Setters>
+            <Setter Property="Background" Value="Violet"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ListTodos,Path=SelectedItem}" Value="{x:Null}">
+                <Setter Property="IsEnabled" Value="False"/>            
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="Style_UpdateButton" TargetType="Button" BasedOn="{StaticResource Style_ButtonsDefault}">
          <Style.Setters>
             <Setter Property="Background" Value="Blue"/>
          </Style.Setters>
         <Style.Triggers>
-            <MultiDataTrigger>
-            <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding ElementName=TodoBox,Path=Text}" Value=""/>                
-                <Condition Binding="{Binding ElementName=Selected,Path=Text}" Value=""/>                
-            </MultiDataTrigger.Conditions>
+            <DataTrigger Binding="{Binding ElementName=ListTodos,Path=SelectedItem}" Value="{x:Null}">
                 <Setter Property="IsEnabled" Value="False"/>            
-            </MultiDataTrigger>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
-    
     <Style x:Key="Style_Label" TargetType="TextBlock">
         <Style.Setters>
             <Setter Property="FontSize" Value="20"/>
@@ -65,13 +74,20 @@
             </DataTrigger>            
         </Style.Triggers>
     </Style>
-    
-    
-    <Style x:Key="Style_ListBox" TargetType="ListItem">
+    <Style x:Key="Style_ListBox" TargetType="ListBox">
+        <Style.Triggers>
+            <Trigger Property="HasItems" Value="False">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="Style_Selected" TargetType="TextBlock">
         <Style.Setters>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Margin" Value="0,30,0,0"/>
         </Style.Setters>
     </Style>
 </ResourceDictionary>
